@@ -16,6 +16,6 @@ target_compile_features(DYN INTERFACE cxx_std_20)
 
 if(MSVC)
      target_compile_options(DYN INTERFACE /Zc:preprocessor /Zc:__cplusplus /permissive- /bigobj)
- endif()
+endif()
 
 add_library(DYN::DYN ALIAS DYN)
