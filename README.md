@@ -1,6 +1,5 @@
-
 # Cpp Dyn
-Cpp-Dyn tries to C++ improve runtime polymorphism.
+Cpp-Dyn tries to improve C++ runtime polymorphism.
 Indeed, C++ runtime polymorphism, originally, uses inheritance and virtual methods.
 Sean Parent, at least I believe he is the inventor of this idea, uses type erasure for runtime polymorphism. It is better because we can use value instead of pointer/reference, and we don't depend anymore on a base class.
 
