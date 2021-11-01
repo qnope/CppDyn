@@ -35,24 +35,17 @@
 
 #define DYN_STRIP_PARENTHESIS(list) DYN_EXPAND list
 
-#define DYN_FOR_EACH_IMPL(macro, x, ...)                                       \
-  macro(x) __VA_OPT__(DYN_DEFER(DYN_FOR_EACH_I)()(macro, __VA_ARGS__))
+#define DYN_FOR_EACH_IMPL(macro, x, ...) macro(x) __VA_OPT__(DYN_DEFER(DYN_FOR_EACH_I)()(macro, __VA_ARGS__))
 #define DYN_FOR_EACH_I() DYN_FOR_EACH_IMPL
-#define DYN_TRY_FOR_EACH(macro, ...)                                           \
-  __VA_OPT__(DYN_FOR_EACH_IMPL(macro, __VA_ARGS__))
-#define DYN_FOR_EACH(macro, list)                                              \
-  DYN_EVAL(DYN_DEFER(DYN_TRY_FOR_EACH)(macro, DYN_STRIP_PARENTHESIS(list)))
+#define DYN_TRY_FOR_EACH(macro, ...) __VA_OPT__(DYN_FOR_EACH_IMPL(macro, __VA_ARGS__))
+#define DYN_FOR_EACH(macro, list) DYN_EVAL(DYN_DEFER(DYN_TRY_FOR_EACH)(macro, DYN_STRIP_PARENTHESIS(list)))
 
-#define DYN_MAP_IMPL(macro, x, ...)                                            \
-  macro(x) __VA_OPT__(DYN_DEFER(DYN_MAP_I)()(macro, __VA_ARGS__))
+#define DYN_MAP_IMPL(macro, x, ...) macro(x) __VA_OPT__(DYN_DEFER(DYN_MAP_I)()(macro, __VA_ARGS__))
 #define DYN_MAP_I() , DYN_MAP_IMPL
 #define DYN_TRY_MAP(macro, ...) __VA_OPT__(DYN_MAP_IMPL(macro, __VA_ARGS__))
-#define DYN_MAP(macro, list)                                                   \
-  DYN_DEFER(DYN_TRY_MAP)(macro, DYN_STRIP_PARENTHESIS(list))
+#define DYN_MAP(macro, list) DYN_DEFER(DYN_TRY_MAP)(macro, DYN_STRIP_PARENTHESIS(list))
 
-#define DYN_ENUMERATE_IMPL(n, x, ...)                                          \
-  (n, x) __VA_OPT__(DYN_DEFER(DYN_ENUMERATE_I)()(DYN_INC(n), __VA_ARGS__))
+#define DYN_ENUMERATE_IMPL(n, x, ...) (n, x) __VA_OPT__(DYN_DEFER(DYN_ENUMERATE_I)()(DYN_INC(n), __VA_ARGS__))
 #define DYN_ENUMERATE_I() , DYN_ENUMERATE_IMPL
 #define DYN_TRY_ENUMERATE(...) __VA_OPT__(DYN_ENUMERATE_IMPL(0, __VA_ARGS__))
-#define DYN_ENUMERATE(list)                                                    \
-  (DYN_DEFER(DYN_TRY_ENUMERATE)(DYN_STRIP_PARENTHESIS(list)))
+#define DYN_ENUMERATE(list) (DYN_DEFER(DYN_TRY_ENUMERATE)(DYN_STRIP_PARENTHESIS(list)))
